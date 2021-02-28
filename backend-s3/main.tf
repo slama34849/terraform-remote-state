@@ -63,7 +63,7 @@ resource "aws_instance" "my_instance" {
     # availability_zone = "us-east-1d"
     subnet_id = aws_subnet.my_terra_sub.id
     instance_type = "t2.micro"
-    key_name = "suryaraj"
+    key_name = "xxxxxxxx"
     # user_data = "${file("install_apache.sh")}"
     associate_public_ip_address = "true"
     security_groups = ["${aws_security_group.terra_web_sg.id}"]
