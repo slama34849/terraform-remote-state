@@ -1,4 +1,6 @@
-provider "aws" {}  # Input Variable
+provider "aws" {
+  region = "us-east-2"
+}  # Input Variable
 
 data "aws_ami" "app_ami" {
   most_recent = true
