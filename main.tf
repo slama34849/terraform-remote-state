@@ -1,6 +1,7 @@
 provider "aws" {
-  region = "us-east-2"
-}  # Input Variable
+  region = var.region
+}
+
 
 data "aws_ami" "app_ami" {
   most_recent = true
@@ -8,10 +9,25 @@ data "aws_ami" "app_ami" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm*"]
+    values = ["amzn2-ami-hvm*gp2"]
   }
 }
 
-output "ami" {
-    value = data.aws_ami.app_ami.id
+
+resource "aws_instance" "ec2_instance" {
+  ami                         = data.aws_ami.app_ami.id
+  instance_type               = var.instance_type
+  key_name                    = var.key_name
+  associate_public_ip_address = var.public_ip
+  user_data                   = var.user_data
+  count                       = var.instance_count
+  tags = {
+    Name = var.instance_tag
+  }
+
+}
+
+
+output "public_ip" {
+  value = aws_instance.ec2_instance[*].public_ip
 }
